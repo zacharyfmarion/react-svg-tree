@@ -1,11 +1,14 @@
-# React Tree
+---
+name: Tree
+path: /tree
+---
 
-React Tree provides components for rendering tree graphs with svg. The API is declarative and intutive:
+import Tree from './Tree';
+import Node from './Node';
 
-```js
-import { Tree, Node } from 'react-tree';
+# Basic Tree
 
-const App = () => (
+<Playground>
   <Tree width={100} height={100}>
     {/* Depth === 0 */}
     <Node id={0} depth={0} rowIndex={0} childNodes={[1, 2, 3]} />
@@ -21,5 +24,4 @@ const App = () => (
     <Node id={8} depth={2} rowIndex={4} />
     <Node id={9} depth={2} rowIndex={5} />
   </Tree>
-)
-```
+</Playground>

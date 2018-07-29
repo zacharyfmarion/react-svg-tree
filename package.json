@@ -55,6 +55,7 @@
     "@types/node": "^9.4.6",
     "@types/react": "16.4.7",
     "@types/react-dom": "16.0.4",
+    "docz": "^0.8.0",
     "typescript": "2.9.2"
   },
   "jest": {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Props as NodeProps } from '../Node';
+import { Props as NodeProps } from './Node';
 import styled from 'styled-components';
 
 interface Props {
@@ -26,11 +26,7 @@ const Line = styled.line`
 `;
 
 /**
- * Ideal API: Basically you provide nodes with a list of chidlren
- * ids, which are then used to render them in an ordered manner.
- * This will get quite complex logically and honestly shuold
- * probably be handled by an external library. Oh weill it's worth
- * a shot at the very least
+ * TODO: THIS WOULD BE WAY SIMPLER IF YOU JUST NESTED
  */
 class Network extends React.Component<Props> {
   /**

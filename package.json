@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "react-svg-tree",
   "version": "0.1.0",
   "private": true,
   "main": "src/index.tsx",

@@ -11,8 +11,10 @@ export interface Props {
   y?: number;
 }
 
-const Node = ({ id, x, y, className }: Props) => (
+export type NodeElement = React.ReactElement<Props>;
+
+const NodeComponent = ({ id, x, y, className }: Props) => (
   <circle cx={x} cy={y} r="2" className={className} />
 );
 
-export default Node;
+export default NodeComponent;

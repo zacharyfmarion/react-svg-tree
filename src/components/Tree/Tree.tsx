@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Props as NodeProps } from './Node';
+import { NodeElement } from './Node';
 import styled from 'styled-components';
 
 interface Props {
@@ -7,10 +7,8 @@ interface Props {
   height: number;
   className?: string;
   // children should only be Nodes
-  children: Array<React.ReactElement<NodeProps>>;
+  children: Array<NodeElement>;
 }
-
-type NodeElement = React.ReactElement<NodeProps>;
 
 const TreeSvg = styled.svg`
   position: absolute;
@@ -51,7 +49,7 @@ class Network extends React.Component<Props> {
    * Create a connection between a parent node and each of each children
    */
   createChildConnections = (
-    node: React.ReactElement<NodeProps>,
+    node: NodeElement,
     x: number,
     y: number,
   ): Array<React.ReactNode> => {
@@ -84,6 +82,8 @@ class Network extends React.Component<Props> {
    * Get the width of the tree at each depth. We essentially perform
    * a BFS while keeping track of the current depth of the tree and
    * the number of nodes at that depth
+   *
+   * TODO: Replace this with optimal algo for distribution
    */
   get widthMap(): Map<number, number> {
     const visited = [0];

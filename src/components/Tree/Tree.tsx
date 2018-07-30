@@ -10,6 +10,7 @@ interface Props extends Options {
   height: number;
   className?: string;
   children: Array<NodeElement>;
+  rootId?: number;
 }
 
 const TreeSvg = styled.svg`
@@ -26,10 +27,31 @@ const Line = styled.line`
 `;
 
 /**
- * TODO: THIS WOULD BE WAY SIMPLER IF YOU JUST NESTED
+ * Representation options
+ *
+ * 1. Create a seprarate data structure just using the ids and use
+ *    maps for each of the necessary properties
+ *    - PROS
+ *       * Simpler to understand
+ *    - CONS
+ *       * Have to recreate the whole graph each time there is a
+ *         change to the children
+ * 2. Create a seprarte TreeNode class that has all the properties
+ *    that we need
+ *    - PROS
+ *       * Closer to original algo
+ *    - CONS
+ *       * Duplication between Node and TreeNode
+ *       * Still have to recreate the whole graph
+ * 3. Add properties to the Node class that we set during the algo
+ *    - PROS
+ *       * Cleanest
+ *    - CONS
+ *       * Have to pass around React elements in the algorithm
  */
 class Network extends React.Component<Props> {
   static defaultProps = {
+    rootId: 0,
     levelSeparation: 5,
     maxDepth: Infinity,
     siblingSeparation: 2,
@@ -51,7 +73,7 @@ class Network extends React.Component<Props> {
       ]),
     );
     const treeGraph = new TreeGraph(vertexMap);
-    const res = positionTree(treeGraph, {
+    const res = positionTree(treeGraph, this.props.rootId || 0, {
       levelSeparation: this.props.levelSeparation,
       maxDepth: this.props.maxDepth,
       siblingSeparation: this.props.siblingSeparation,

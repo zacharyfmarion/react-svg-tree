@@ -31,9 +31,51 @@ export interface Options {
   subtreeSeparation?: number;
 }
 
+// GLOBALS
+let xTopAdjustment: number;
+let yTopAdjustment: number;
+
 export default function positionTree(
   tree: TreeGraph,
+  node: number,
   options: Options,
 ): boolean {
+  if (tree.hasNode(node)) {
+    // Intialize the list of previous nodes at each level
+    initPrevNodeList(tree);
+    // Do the preliminary positioning with a postorder walk
+    firstWalk(tree, node, 0);
+    // Determine how to adjust all the nodes with respect to
+    // the location of the root.
+    const xTopAdjustment = tree.xCoord(node) - tree.prelim(node);
+    const yTopAdjustment = tree.yCoord(node);
+    console.log(xTopAdjustment, yTopAdjustment);
+    return secondWalk(tree, node, 0, 0);
+  }
+  return true;
+}
+
+function initPrevNodeList(tree: TreeGraph) {
+  console.log('initPrevNodeList');
+}
+
+/**
+ * First walk of the tree, where we compute the preliminary
+ * position values for the node placement
+ *
+ * @param node The node we are starting the walk from
+ * @param level The current depth of the tree
+ */
+function firstWalk(tree: TreeGraph, node: number, level: number) {
+  console.log('firstWalk', node, level);
+}
+
+function secondWalk(
+  tree: TreeGraph,
+  node: number,
+  level: number,
+  modSum: number,
+): boolean {
+  console.log('secondWalk', node, level, modSum);
   return true;
 }

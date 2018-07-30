@@ -2,11 +2,13 @@ import * as React from 'react';
 import { NodeElement } from './Node';
 import styled from 'styled-components';
 
-interface Props {
+import TreeGraph from '../../TreeGraph';
+import positionTree, { Options } from '../../positionTree';
+
+interface Props extends Options {
   width: number;
   height: number;
   className?: string;
-  // children should only be Nodes
   children: Array<NodeElement>;
 }
 
@@ -27,12 +29,36 @@ const Line = styled.line`
  * TODO: THIS WOULD BE WAY SIMPLER IF YOU JUST NESTED
  */
 class Network extends React.Component<Props> {
+  static defaultProps = {
+    levelSeparation: 5,
+    maxDepth: Infinity,
+    siblingSeparation: 2,
+    subtreeSeparation: 2,
+  };
+
   /**
    * Render the nodes into a normalized tree based on the id's
-   * of the nodes that are their children.
+   * of the nodes that are their children. Here we create a TreeGraph
+   * object that maps to the Nodes and call positionTree, the algorithm
+   * that determines the optimal x-coordinates for each node in the tree
    */
   renderChildNodes = () => {
-    const { children } = this.props;
+    const children = React.Children.toArray(this.props.children);
+    const vertexMap: Map<number, Array<number>> = new Map(
+      children.map<[number, Array<number>]>((child: NodeElement) => [
+        child.props.id,
+        child.props.childNodes || [],
+      ]),
+    );
+    const treeGraph = new TreeGraph(vertexMap);
+    const res = positionTree(treeGraph, {
+      levelSeparation: this.props.levelSeparation,
+      maxDepth: this.props.maxDepth,
+      siblingSeparation: this.props.siblingSeparation,
+      subtreeSeparation: this.props.subtreeSeparation,
+    });
+    console.log(res);
+
     const svgElements: Array<React.ReactNode> = [];
     React.Children.forEach(children, (child: NodeElement) => {
       // Determine the position of the node element in the SVG
@@ -70,7 +96,6 @@ class Network extends React.Component<Props> {
    */
   getNodeCoordinates = (node: NodeElement): [number, number] => {
     const numNodes = this.widthMap.get(node.props.depth) || 0;
-    console.log(this.widthMap);
     const { width } = this.props;
     return [
       (width / (numNodes + 1)) * (node.props.rowIndex + 1),

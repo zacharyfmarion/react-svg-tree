@@ -1,10 +1,10 @@
 import TreeGraph from './TreeGraph';
 
 /**
- * Function that optimally positions the x coordinates of all nodes in
- * a tree for aesthetics. Adapted from http://www.cs.unc.edu/techreports/89-034.pdf
- *
- * @return {boolean} true if the tree fits and false if it does not
+ * This file contains the code necessary for the correct aesthetic positioning
+ * of nodes in a tree. The algorithm was modified from http://www.cs.unc.edu/techreports/89-034.pdf
+ * and will most likely eventually be available as a separate package.
+ * @author Zachary Marion
  */
 
 export interface Options {
@@ -35,6 +35,12 @@ export interface Options {
 let xTopAdjustment: number;
 let yTopAdjustment: number;
 
+/**
+ * Function that optimally positions the x coordinates of all nodes in
+ * a tree for aesthetics. Adapted from http://www.cs.unc.edu/techreports/89-034.pdf
+ *
+ * @return {boolean} true if the tree fits and false if it does not
+ */
 export default function positionTree(
   tree: TreeGraph,
   node: number,
@@ -55,6 +61,11 @@ export default function positionTree(
   return true;
 }
 
+/**
+ * Initialize the list of previous nodes
+ *
+ * @param tree The tree object
+ */
 function initPrevNodeList(tree: TreeGraph) {
   console.log('initPrevNodeList');
 }
@@ -63,6 +74,7 @@ function initPrevNodeList(tree: TreeGraph) {
  * First walk of the tree, where we compute the preliminary
  * position values for the node placement
  *
+ * @param tree The tree graph object
  * @param node The node we are starting the walk from
  * @param level The current depth of the tree
  */
@@ -70,6 +82,13 @@ function firstWalk(tree: TreeGraph, node: number, level: number) {
   console.log('firstWalk', node, level);
 }
 
+/**
+ *
+ * @param tree The tree graph object
+ * @param node The node we are starting the walk from
+ * @param level The current depth
+ * @param modSum ???
+ */
 function secondWalk(
   tree: TreeGraph,
   node: number,

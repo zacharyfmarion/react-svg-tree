@@ -128,6 +128,8 @@ function firstWalk(
       const mod = prelim - midPoint;
       tree.updatePositionValue(node, { prelim, mod });
       apportion(tree, node, level, options);
+    } else {
+      tree.updatePositionValue(node, { prelim: midPoint });
     }
   }
 }

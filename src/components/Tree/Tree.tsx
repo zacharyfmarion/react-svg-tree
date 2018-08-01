@@ -2,12 +2,11 @@ import * as React from 'react';
 import { NodeElement } from './Node';
 import styled from 'styled-components';
 
-import TreeGraph from '../../TreeGraph';
+import TreeGraph, { Position } from '../../TreeGraph';
 import positionTree, { Options } from '../../positionTree';
+import withDefaultProps from '../../helpers/withDefaultProps';
 
 interface Props extends Options {
-  width: number;
-  height: number;
   className?: string;
   children: Array<NodeElement>;
   rootId?: number;
@@ -27,37 +26,9 @@ const Line = styled.line`
 `;
 
 /**
- * Representation options
- *
- * 1. Create a seprarate data structure just using the ids and use
- *    maps for each of the necessary properties
- *    - PROS
- *       * Simpler to understand
- *    - CONS
- *       * Have to recreate the whole graph each time there is a
- *         change to the children
- * 2. Create a seprarte TreeNode class that has all the properties
- *    that we need
- *    - PROS
- *       * Closer to original algo
- *    - CONS
- *       * Duplication between Node and TreeNode
- *       * Still have to recreate the whole graph
- * 3. Add properties to the Node class that we set during the algo
- *    - PROS
- *       * Cleanest
- *    - CONS
- *       * Have to pass around React elements in the algorithm
+ * Tree component
  */
 class Network extends React.Component<Props> {
-  static defaultProps = {
-    rootId: 0,
-    levelSeparation: 5,
-    maxDepth: Infinity,
-    siblingSeparation: 2,
-    subtreeSeparation: 2,
-  };
-
   /**
    * Render the nodes into a normalized tree based on the id's
    * of the nodes that are their children. Here we create a TreeGraph
@@ -66,30 +37,45 @@ class Network extends React.Component<Props> {
    */
   renderChildNodes = () => {
     const children = React.Children.toArray(this.props.children);
+    const rootPosition: [number, Position] = [
+      this.props.rootId || 0,
+      { x: this.props.width / 2, y: 0, prelim: 0, mod: 0 },
+    ];
     const vertexMap: Map<number, Array<number>> = new Map(
       children.map<[number, Array<number>]>((child: NodeElement) => [
         child.props.id,
         child.props.childNodes || [],
       ]),
     );
-    const treeGraph = new TreeGraph(vertexMap);
-    const res = positionTree(treeGraph, this.props.rootId || 0, {
+    const nodeSizeMap: Map<number, number> = new Map(
+      children.map<[number, number]>((child: NodeElement) => [
+        child.props.id,
+        child.props.r || 2,
+      ]),
+    );
+    const treeGraph = new TreeGraph(vertexMap, nodeSizeMap, rootPosition);
+    const res = positionTree(treeGraph, rootPosition[0], {
+      width: this.props.width,
+      height: this.props.height,
       levelSeparation: this.props.levelSeparation,
       maxDepth: this.props.maxDepth,
       siblingSeparation: this.props.siblingSeparation,
       subtreeSeparation: this.props.subtreeSeparation,
     });
-    console.log(res);
 
+    // If we can fit the nodes in the viewBox
     const svgElements: Array<React.ReactNode> = [];
-    React.Children.forEach(children, (child: NodeElement) => {
-      // Determine the position of the node element in the SVG
-      const [x, y] = this.getNodeCoordinates(child);
-      const clonedNode = React.cloneElement(child as any, { x, y });
-      svgElements.push(clonedNode);
-      // Now we create a line between each parent and child node
-      svgElements.push(this.createChildConnections(child, x, y));
-    });
+    if (res) {
+      React.Children.forEach(children, (child: NodeElement) => {
+        // Determine the position of the node element in the SVG
+        const [x, y] = treeGraph.getCoordinates(child.props.id);
+        const clonedNode = React.cloneElement(child as any, { cx: x, cy: y });
+        svgElements.push(clonedNode);
+        // Now we create a line between each parent and child node
+        svgElements.push(this.createChildConnections(treeGraph, child, x, y));
+      });
+    }
+
     return svgElements;
   };
 
@@ -97,6 +83,7 @@ class Network extends React.Component<Props> {
    * Create a connection between a parent node and each of each children
    */
   createChildConnections = (
+    treeGraph: TreeGraph,
     node: NodeElement,
     x: number,
     y: number,
@@ -106,7 +93,7 @@ class Network extends React.Component<Props> {
     node.props.childNodes.forEach((childId: number) => {
       const child: NodeElement | undefined = this.nodeMap.get(childId);
       if (child) {
-        const [childX, childY] = this.getNodeCoordinates(child);
+        const [childX, childY] = treeGraph.getCoordinates(child.props.id);
         connectionNodes.push(<Line x1={x} y1={y} x2={childX} y2={childY} />);
       }
     });
@@ -192,4 +179,12 @@ class Network extends React.Component<Props> {
   }
 }
 
-export default Network;
+export default withDefaultProps({
+  width: 100,
+  height: 100,
+  rootId: 0,
+  levelSeparation: 5,
+  maxDepth: Infinity,
+  siblingSeparation: 2,
+  subtreeSeparation: 2,
+})(Network);

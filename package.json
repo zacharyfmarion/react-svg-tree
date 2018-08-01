@@ -56,7 +56,7 @@
     "@types/react": "16.4.7",
     "@types/react-dom": "16.0.4",
     "docz": "^0.8.0",
-    "typescript": "2.9.2"
+    "typescript": "3.0"
   },
   "jest": {
     "collectCoverageFrom": [

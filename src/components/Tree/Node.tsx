@@ -1,4 +1,5 @@
 import * as React from 'react';
+import withDefaultProps from '../../helpers/withDefaultProps';
 
 export type NodeElement = React.ReactElement<Props>;
 
@@ -9,12 +10,19 @@ export interface Props {
   depth: number;
   rowIndex: number;
   className?: string;
-  x?: number;
-  y?: number;
+  r?: number;
+  cx?: number;
+  cy?: number;
 }
 
-const NodeComponent = ({ id, x, y, className }: Props) => (
-  <circle cx={x} cy={y} r="2" className={className} />
-);
+const NodeComponent: React.SFC<Props> = ({
+  cx,
+  cy,
+  id,
+  r,
+  className,
+}: Props) => <circle cx={cx} cy={cy} r={r} className={className} />;
 
-export default NodeComponent;
+export default withDefaultProps({
+  r: 2,
+})(NodeComponent);

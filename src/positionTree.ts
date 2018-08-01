@@ -254,7 +254,7 @@ function secondWalk(
   options: Options,
 ): boolean {
   console.log('secondWalk', node, level);
-  let result;
+  let result = true;
   if (level <= options.maxDepth) {
     let xTemp = xTopAdjustment + tree.prelim(node) + modSum;
     let yTemp = yTopAdjustment + level * options.levelSeparation;
@@ -262,7 +262,7 @@ function secondWalk(
     // size for your application.
     if (checkExtendsRange(xTemp, yTemp, options)) {
       tree.updatePositionValue(node, { x: xTemp, y: yTemp });
-      if (tree.hasChild(node)) {
+      if (!tree.isLeaf(node)) {
         // Apply the modifier value for this node to all its offspring
         result = secondWalk(
           tree,
@@ -271,26 +271,21 @@ function secondWalk(
           modSum + tree.modifier(node),
           options,
         );
-        if (result === true && tree.hasRightSibling(node)) {
-          result = secondWalk(
-            tree,
-            tree.rightSibling(node),
-            level + 1,
-            modSum,
-            options,
-          );
-        }
-      } else {
-        result = true;
+      }
+      if (result && tree.hasRightSibling(node)) {
+        result = secondWalk(
+          tree,
+          tree.rightSibling(node),
+          level,
+          modSum,
+          options,
+        );
       }
     } else {
       // Continuing would put the tree outside of the *)
       // drawable extents range.
       result = false;
     }
-  } else {
-    // We are at a level deeper than what we want to draw.
-    result = true;
   }
   return result;
 }

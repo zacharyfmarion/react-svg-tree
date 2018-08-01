@@ -52,11 +52,6 @@ class TreeGraph {
     return this.vertexMap.get(node) !== undefined;
   }
 
-  hasChild(node: number): boolean {
-    const children = this.mapGet(this.vertexMap, node, []);
-    return children.length > 0;
-  }
-
   // Return whether the node is a leaf
   isLeaf(node: number): boolean {
     return this.mapGet(this.vertexMap, node, []).length === 0;

@@ -37,15 +37,6 @@ describe('TreeGraph', () => {
     });
   });
 
-  describe('#hasChild', () => {
-    it('Should return true for a node that has children', () => {
-      expect(tree.hasNode(0)).toBe(true);
-    });
-    it('should return false for a node that has no children', () => {
-      expect(tree.hasChild(5)).toBe(false);
-    });
-  });
-
   describe('#isLeaf', () => {
     it('Should return true for a node that is a leaf', () => {
       expect(tree.isLeaf(4)).toBe(true);

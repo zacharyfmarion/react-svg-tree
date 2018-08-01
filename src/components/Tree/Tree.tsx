@@ -101,61 +101,6 @@ class Network extends React.Component<Props> {
   };
 
   /**
-   * Get the (x, y) coordinates of a given node
-   */
-  getNodeCoordinates = (node: NodeElement): [number, number] => {
-    const numNodes = this.widthMap.get(node.props.depth) || 0;
-    const { width } = this.props;
-    return [
-      (width / (numNodes + 1)) * (node.props.rowIndex + 1),
-      node.props.depth * 10 + 5,
-    ];
-  };
-
-  /**
-   * Get the width of the tree at each depth. We essentially perform
-   * a BFS while keeping track of the current depth of the tree and
-   * the number of nodes at that depth
-   *
-   * TODO: Replace this with optimal algo for distribution
-   */
-  get widthMap(): Map<number, number> {
-    const visited = [0];
-    const queue = [0, -1];
-    let currWidth = 0;
-    let currDepth = 0;
-    const widthMap = new Map();
-    while (queue.length > 0) {
-      const nodeId = queue.shift();
-      // If the node is -1 and the queue is empty, then we have reached
-      // the end of the traversal. If the node is -1 but the next ndoe is not,
-      // then we have reached the end of the row and we need to increment the depth
-      if (nodeId === -1) {
-        widthMap.set(currDepth, currWidth);
-        currWidth = 0;
-        currDepth += 1;
-        if (queue.length === 0) break;
-        queue.push(-1);
-        continue;
-      } else if (nodeId === undefined) continue;
-      // We need to increment the maxWidth for a given row
-      currWidth += 1;
-      // If the node has no child nodes then we are at a leaf and we do
-      // not need to enqueue any new nodes into the search
-      const node = this.nodeMap.get(nodeId);
-      if (!node) continue;
-      const childNodes = node.props.childNodes || [];
-      childNodes.forEach((childId: number) => {
-        if (!visited.includes(childId)) {
-          visited.push(childId);
-          queue.push(childId);
-        }
-      });
-    }
-    return widthMap;
-  }
-
-  /**
    * Map with the key as the id of the node and the value being
    * the id's of the child nodes
    */
@@ -183,8 +128,8 @@ export default withDefaultProps({
   width: 100,
   height: 100,
   rootId: 0,
-  levelSeparation: 5,
+  levelSeparation: 15,
   maxDepth: Infinity,
-  siblingSeparation: 2,
-  subtreeSeparation: 2,
+  siblingSeparation: 15,
+  subtreeSeparation: 15,
 })(Network);

@@ -1,4 +1,4 @@
-import TreeGraph from './TreeGraph';
+import TreeGraph, { TreeNode } from './TreeGraph';
 
 /**
  * This file contains the code necessary for the correct aesthetic positioning
@@ -54,7 +54,7 @@ let yTopAdjustment: number;
  */
 export default function positionTree(
   tree: TreeGraph,
-  node: number,
+  node: TreeNode,
   options: Options,
 ): boolean {
   if (tree.hasNode(node)) {
@@ -64,7 +64,6 @@ export default function positionTree(
     // the location of the root.
     xTopAdjustment = tree.xCoord(node) - tree.prelim(node);
     yTopAdjustment = tree.yCoord(node);
-    console.log(xTopAdjustment, yTopAdjustment);
     return secondWalk(tree, node, 0, 0, options);
   }
   return true;
@@ -81,7 +80,7 @@ export default function positionTree(
  */
 function firstWalk(
   tree: TreeGraph,
-  node: number,
+  node: TreeNode,
   level: number,
   options: Options,
 ) {
@@ -91,7 +90,7 @@ function firstWalk(
 
   if (tree.isLeaf(node) || level === options.maxDepth) {
     const leftSibling = tree.leftSibling(node);
-    if (leftSibling !== -1) {
+    if (leftSibling !== null) {
       // Determine the preliminary x-coordinate based on:
       // 1. The preliminary x-coordinate of the left sibling,
       // 2. The separation between sibling nodes, and
@@ -118,9 +117,9 @@ function firstWalk(
     }
 
     const midPoint = (tree.prelim(leftMost) + tree.prelim(rightMost)) / 2;
+    const leftSibling = tree.leftSibling(node);
 
-    if (tree.hasLeftSibling(node)) {
-      const leftSibling = tree.leftSibling(node);
+    if (leftSibling !== null) {
       const prelim =
         tree.prelim(leftSibling) +
         options.siblingSeparation +
@@ -144,22 +143,27 @@ function firstWalk(
  */
 function apportion(
   tree: TreeGraph,
-  node: number,
+  node: TreeNode,
   level: number,
   options: Options,
 ) {
+  console.log('apportion', node, level);
   let leftMost = tree.firstChild(node);
   let neighbor = tree.leftNeighbor(leftMost);
   let compareDepth = 1;
   let depthToStop = options.maxDepth - level;
 
-  while (leftMost !== -1 && neighbor !== -1 && compareDepth < depthToStop) {
+  while (
+    leftMost !== null &&
+    neighbor !== null &&
+    compareDepth <= depthToStop
+  ) {
     // Compute the location of leftmost and where it should
     // be with respect to neighbor.
     let leftModsum = 0;
     let rightModsum = 0;
-    let ancestorLeftMost = leftMost;
-    let ancestorNeighbor = neighbor;
+    let ancestorLeftMost: TreeNode = leftMost;
+    let ancestorNeighbor: TreeNode = neighbor;
 
     for (let i = 0; i < compareDepth; i++) {
       ancestorLeftMost = tree.parent(ancestorLeftMost);
@@ -167,7 +171,7 @@ function apportion(
       rightModsum = rightModsum + tree.modifier(ancestorLeftMost);
       leftModsum = leftModsum + tree.modifier(ancestorNeighbor);
     }
-    // Find the floveDistance, and apply it to Node's subtree.
+    // Find the moveDistance, and apply it to Node's subtree.
     // Add appropriate portions to smaller interior subtrees.
     let moveDistance =
       tree.prelim(neighbor) +
@@ -180,15 +184,15 @@ function apportion(
       // Count interior sibling subtrees in LeftSiblings
       let temp = node;
       let leftSiblings = 0;
-      while (temp !== -1 && temp !== ancestorNeighbor) {
+      while (temp !== null && temp !== ancestorNeighbor) {
         leftSiblings += 1;
         temp = tree.leftSibling(temp);
       }
-      if (temp !== -1) {
+      if (temp !== null) {
         // Apply portions to appropriate leftsibling subtrees
         const portion = moveDistance / leftSiblings;
         temp = node;
-        while (temp === ancestorNeighbor) {
+        while (temp !== ancestorNeighbor) {
           const prelim = tree.prelim(temp) + moveDistance;
           const mod = tree.modifier(temp) + moveDistance;
           moveDistance = moveDistance - portion;
@@ -223,22 +227,20 @@ function apportion(
  */
 function getLeftMost(
   tree: TreeGraph,
-  node: number,
+  node: TreeNode,
   level: number,
   depth: number,
-): number {
+): TreeNode {
   if (level >= depth) return node;
-  else if (tree.isLeaf(node)) return -1;
-  else {
-    let rightMost = tree.firstChild(node);
-    let leftMost = getLeftMost(tree, rightMost, level + 1, depth);
-    // Do a postorder walk of the subtree below Node.
-    while (leftMost !== -1 && tree.hasRightSibling(rightMost)) {
-      rightMost = tree.rightSibling(rightMost);
-      leftMost = getLeftMost(tree, rightMost, level + 1, depth);
-    }
-    return leftMost;
+  if (tree.isLeaf(node)) return null;
+  let rightMost = tree.firstChild(node);
+  let leftMost = getLeftMost(tree, rightMost, level + 1, depth);
+  // Do a postorder walk of the subtree below Node.
+  while (leftMost !== null && tree.hasRightSibling(rightMost)) {
+    rightMost = tree.rightSibling(rightMost);
+    leftMost = getLeftMost(tree, rightMost, level + 1, depth);
   }
+  return leftMost;
 }
 
 /**
@@ -250,7 +252,7 @@ function getLeftMost(
  */
 function secondWalk(
   tree: TreeGraph,
-  node: number,
+  node: TreeNode,
   level: number,
   modSum: number,
   options: Options,
@@ -260,8 +262,7 @@ function secondWalk(
   if (level <= options.maxDepth) {
     let xTemp = xTopAdjustment + tree.prelim(node) + modSum;
     let yTemp = yTopAdjustment + level * options.levelSeparation;
-    // Check to see that xTemp and yTemp are of the proper *)
-    // size for your application.
+    // Check to see that xTemp and yTemp fit within the viewing rect
     if (checkExtendsRange(xTemp, yTemp, options)) {
       tree.updatePositionValue(node, { x: xTemp, y: yTemp });
       if (!tree.isLeaf(node)) {

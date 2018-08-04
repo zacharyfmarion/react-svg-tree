@@ -1,4 +1,4 @@
-import TreeGraph from './TreeGraph';
+import TreeGraph, { mapGet } from './TreeGraph';
 
 describe('TreeGraph', () => {
   let tree;
@@ -51,7 +51,7 @@ describe('TreeGraph', () => {
       expect(tree.parent(2)).toBe(0);
     });
     it('should return -1 for a node with no parent', () => {
-      expect(tree.parent(0)).toBe(-1);
+      expect(tree.parent(0)).toBeNull();
     });
   });
 
@@ -60,7 +60,7 @@ describe('TreeGraph', () => {
       expect(tree.firstChild(0)).toBe(1);
     });
     it('should return -1 for a node with no children', () => {
-      expect(tree.firstChild(4)).toBe(-1);
+      expect(tree.firstChild(4)).toBeNull();
     });
   });
 
@@ -75,22 +75,31 @@ describe('TreeGraph', () => {
       expect(tree.leftSibling(2)).toBe(1);
     });
     it('should return -1 for a node with no left sibling', () => {
-      expect(tree.leftSibling(4)).toBe(-1);
+      expect(tree.leftSibling(4)).toBeNull();
+    });
+  });
+
+  describe('#leftSiblings', () => {
+    it('should return the correct left siblings', () => {
+      expect(tree.leftSiblings(3)).toEqual([1, 2]);
+    });
+    it('should return an empty array for a node with no left siblings', () => {
+      expect(tree.leftSiblings(4)).toEqual([]);
     });
   });
 
   describe('#mapGet', () => {
     it('should return the key if it exists', () => {
       const map = new Map([[1, 1]]);
-      expect(tree.mapGet(map, 1)).toBe(1);
+      expect(mapGet(map, 1)).toBe(1);
     });
     it('should return the default value if the key does not exist', () => {
       const map = new Map([[1, 1]]);
-      expect(tree.mapGet(map, 0)).toBe(-1);
+      expect(mapGet(map, 0)).toBeNull();
     });
     it('should default to -1 if the value if the key does not exist and no defaultValue was provided', () => {
       const map = new Map([[1, 1]]);
-      expect(tree.mapGet(map, 0)).toBe(-1);
+      expect(mapGet(map, 0)).toBeNull();
     });
   });
 

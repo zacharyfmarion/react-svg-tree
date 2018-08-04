@@ -32,8 +32,8 @@ function App() {
           <Node id={14} childNodes={[4, 5, 13]} />
           {/* Depth === 1 */}
           <Node id={4} childNodes={[0, 3]} />
-          <Node id={5} childNodes={[6, 12]} />
           <Node id={13} childNodes={[]} />
+          <Node id={5} childNodes={[6, 12]} />
           {/* Depth === 2 */}
           <Node id={0} childNodes={[]} />
           <Node id={3} childNodes={[1, 2]} />
@@ -52,7 +52,7 @@ function App() {
         <Tree
           width={200}
           height={150}
-          rootId="A"
+          rootId="O"
           vertices={vertexMap}
           showLabels={true}
         />

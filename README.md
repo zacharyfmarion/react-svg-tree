@@ -1,6 +1,6 @@
 # React Tree
 
-React Tree provides components for rendering tree graphs with svg. You can pass in a map of the vertices to their children:
+React Tree provides components for rendering tree graphs with svg. It uses the algorithm described in [this paper](http://www.cs.unc.edu/techreports/89-034.pdf). You can pass in a map of the vertices to their children:
 
 ```js
 import { Tree, Node } from 'react-svg-tree';

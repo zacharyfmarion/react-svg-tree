@@ -27,7 +27,7 @@ const App = () => (
   <Tree
     width={200}
     height={150}
-    rootId="A"
+    rootId="O"
     vertices={vertexMap}
     showLabels={true}
   />

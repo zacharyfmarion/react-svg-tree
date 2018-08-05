@@ -21,7 +21,7 @@ const vertexMap = new Map([
   ['L', []],
 ]);
 
-const showVertexMap = false;
+const showVertexMap = true;
 
 function App() {
   return (

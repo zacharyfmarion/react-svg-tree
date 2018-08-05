@@ -78,7 +78,7 @@ export default function positionTree(
  * @param level The current depth of the tree
  * @param options Options for the positioning
  */
-function firstWalk(
+export function firstWalk(
   tree: TreeGraph,
   node: TreeNode,
   level: number,
@@ -141,7 +141,7 @@ function firstWalk(
  * @param level The current depth of the tree
  * @param options Options for the positioning
  */
-function apportion(
+export function apportion(
   tree: TreeGraph,
   node: TreeNode,
   level: number,
@@ -149,6 +149,7 @@ function apportion(
 ) {
   console.log('apportion', node, level);
   let leftMost = tree.firstChild(node);
+  // THIS SHOULD BE C BUT IT IS STILL D
   let neighbor = tree.leftNeighbor(leftMost);
   let compareDepth = 1;
   let depthToStop = options.maxDepth - level;
@@ -214,6 +215,7 @@ function apportion(
     leftMost = tree.isLeaf(leftMost)
       ? getLeftMost(tree, node, 0, compareDepth)
       : tree.firstChild(leftMost);
+    neighbor = tree.leftNeighbor(leftMost);
   }
 }
 
@@ -221,26 +223,24 @@ function apportion(
  *
  * @param tree The tree graph object
  * @param node The node we are starting the walk from
- * @param level refers to the level below the node whose leftmost descendant is being found.
+ * @param level refers to the level below the node whose leftmost
+ * descendant is being found.
  * This is not the absolute level used in the main walks
  * @param depth The compare depth
  */
-function getLeftMost(
+export function getLeftMost(
   tree: TreeGraph,
   node: TreeNode,
   level: number,
   depth: number,
 ): TreeNode {
   if (level >= depth) return node;
-  if (tree.isLeaf(node)) return null;
-  let rightMost = tree.firstChild(node);
-  let leftMost = getLeftMost(tree, rightMost, level + 1, depth);
-  // Do a postorder walk of the subtree below Node.
-  while (leftMost !== null && tree.hasRightSibling(rightMost)) {
-    rightMost = tree.rightSibling(rightMost);
-    leftMost = getLeftMost(tree, rightMost, level + 1, depth);
+  let leftMost = node;
+  while (tree.firstChild(leftMost) === null && tree.hasRightSibling(leftMost)) {
+    leftMost = tree.rightSibling(leftMost);
   }
-  return leftMost;
+  leftMost = tree.firstChild(leftMost);
+  return getLeftMost(tree, leftMost, level + 1, depth);
 }
 
 /**
@@ -250,7 +250,7 @@ function getLeftMost(
  * @param level The current depth
  * @param modSum ???
  */
-function secondWalk(
+export function secondWalk(
   tree: TreeGraph,
   node: TreeNode,
   level: number,
@@ -300,6 +300,10 @@ function secondWalk(
  * @param y The y coordinate of the node
  * @param options Options for the positioning
  */
-function checkExtendsRange(x: number, y: number, options: Options): boolean {
+export function checkExtendsRange(
+  x: number,
+  y: number,
+  options: Options,
+): boolean {
   return x >= 0 && x <= options.width && y >= 0 && y <= options.height;
 }

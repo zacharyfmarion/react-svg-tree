@@ -4,6 +4,12 @@
   "description": "React component to render an SVG tree graph",
   "private": true,
   "main": "dist/index.js",
+  "scripts": {
+    "docz": "docz dev",
+    "docz:build": "docz build",
+    "build": "webpack",
+    "test": "jest --env=jsdom"
+  },
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-jest": "^22.1.0",
@@ -33,29 +39,25 @@
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "ts-jest": "22.0.1",
-    "ts-loader": "^2.3.7",
+    "ts-loader": "^4.4.2",
     "tsconfig-paths-webpack-plugin": "^2.0.0",
     "tslint": "^5.7.0",
     "tslint-config-prettier": "^1.10.0",
     "tslint-react": "^3.2.0",
-    "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "0.6.2",
-    "webpack": "3.8.1",
+    "webpack": "^4.16.4",
     "webpack-dev-server": "2.9.4",
     "webpack-manifest-plugin": "1.3.2",
     "whatwg-fetch": "2.0.3"
-  },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
     "@types/jest": "^22.1.3",
     "@types/node": "^9.4.6",
     "@types/react": "16.4.7",
     "@types/react-dom": "16.0.4",
-    "typescript": "3.0"
+    "docz": "^0.9.5",
+    "typescript": "3.0",
+    "webpack-cli": "^3.1.0"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -72,9 +74,9 @@
     "testURL": "http://localhost",
     "transform": {
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^.+\\.tsx?$": "<rootDir>/config/typescriptTransform.js",
+      "^.+\\.css$": "<rootDir>/config/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$"
@@ -97,7 +99,7 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "/Users/RETINA/Desktop/projects/Tree/tsconfig.test.json"
+        "tsConfigFile": "./tsconfig.test.json"
       }
     }
   },

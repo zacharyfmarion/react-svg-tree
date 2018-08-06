@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import withDefaultProps from '../../helpers/withDefaultProps';
-import { TreeNode } from '../../TreeGraph';
+import withDefaultProps from '../helpers/withDefaultProps';
+import { TreeNode } from '../helpers/TreeGraph';
 
 export type NodeElement = React.ReactElement<Props>;
 

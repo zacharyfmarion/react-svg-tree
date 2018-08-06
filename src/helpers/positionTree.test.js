@@ -1,11 +1,18 @@
 import TreeGraph, { mapGet } from './TreeGraph';
-import { checkExtendsRange, getLeftMost } from './positionTree';
+import { checkExtendsRange, getLeftMost, firstWalk } from './positionTree';
 
 describe('TreeGraph', () => {
   let tree;
-  let rootPosition;
+  const rootPosition = { x: 50, y: 0, prelim: 0, mod: 0 };
+  const options = {
+    width: 200,
+    height: 150,
+    maxDepth: Infinity,
+    levelSeparation: 4,
+    siblingSeparation: 4,
+    subtreeSeparation: 4,
+  };
   beforeEach(() => {
-    rootPosition = { x: 50, y: 0, prelim: 0, mod: 0 };
     //              O
     //              |
     //     ----------------------
@@ -54,8 +61,37 @@ describe('TreeGraph', () => {
         ['N', 2],
         ['O', 2],
       ]),
-      [0, rootPosition],
+      ['O', rootPosition],
     );
+  });
+
+  describe('#firstWalk', () => {
+    it('returns the correct x coordinates for each node', () => {
+      const correctPositions = {
+        O: { mod: 0, prelim: 0 },
+        A: { mod: 0, prelim: 0 },
+        B: { mod: 0, prelim: 0 },
+        C: { mod: 0, prelim: 6 },
+        D: { mod: 3, prelim: 6 },
+        E: { mod: 0, prelim: 3 },
+        F: { mod: 4.5, prelim: 13.5 },
+        G: { mod: 0, prelim: 0 },
+        H: { mod: 0, prelim: 0 },
+        I: { mod: 0, prelim: 6 },
+        J: { mod: 0, prelim: 12 },
+        K: { mod: 0, prelim: 18 },
+        L: { mod: 0, prelim: 24 },
+        M: { mod: -6, prelim: 6 },
+        N: { mod: 21, prelim: 24 },
+        O: { mod: 0, prelim: 13.5 },
+      };
+      firstWalk(tree, 'O', 0, options);
+      let positions = {};
+      tree.positionMap.forEach(
+        ({ prelim, mod }, key) => (positions[key] = { prelim, mod }),
+      );
+      expect(positions).toEqual(correctPositions);
+    });
   });
 
   describe('#getLeftMost', () => {

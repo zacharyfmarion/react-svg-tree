@@ -84,7 +84,6 @@ export function firstWalk(
   level: number,
   options: Options,
 ) {
-  console.log('firstWalk', node, level);
   tree.leftNeighborMap.set(node, tree.prevNode(level));
   tree.prevNodeMap.set(level, node);
 
@@ -147,7 +146,6 @@ export function apportion(
   level: number,
   options: Options,
 ) {
-  console.log('apportion', node, level);
   let leftMost = tree.firstChild(node);
   // THIS SHOULD BE C BUT IT IS STILL D
   let neighbor = tree.leftNeighbor(leftMost);
@@ -257,7 +255,6 @@ export function secondWalk(
   modSum: number,
   options: Options,
 ): boolean {
-  console.log('secondWalk', node, level);
   let result = true;
   if (level <= options.maxDepth) {
     let xTemp = xTopAdjustment + tree.prelim(node) + modSum;

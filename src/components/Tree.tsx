@@ -2,9 +2,9 @@ import * as React from 'react';
 import Node, { NodeElement } from './Node';
 import styled from 'styled-components';
 
-import TreeGraph, { TreeNode, Position } from '../../TreeGraph';
-import positionTree, { Options } from '../../positionTree';
-import withDefaultProps from '../../helpers/withDefaultProps';
+import TreeGraph, { TreeNode, Position } from '../helpers/TreeGraph';
+import positionTree, { Options } from '../helpers/positionTree';
+import withDefaultProps from '../helpers/withDefaultProps';
 
 interface Props extends Options {
   /** The element that you wish to display at the root of the tree */

@@ -1,4 +1,4 @@
-# React Tree
+# React SVG Tree
 
 React Tree provides components for rendering tree graphs with svg. It uses the algorithm described in [this paper](http://www.cs.unc.edu/techreports/89-034.pdf). You can pass in a map of the vertices to their children:
 
@@ -63,3 +63,9 @@ const App = () => (
   </Tree>
 );
 ```
+
+## TODO
+
+- [ ] Remove styled-components as a dependency
+- [ ] Center the text on the node component
+- [ ] Get docz working and hosted

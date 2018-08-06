@@ -68,7 +68,6 @@ describe('TreeGraph', () => {
   describe('#firstWalk', () => {
     it('returns the correct x coordinates for each node', () => {
       const correctPositions = {
-        O: { mod: 0, prelim: 0 },
         A: { mod: 0, prelim: 0 },
         B: { mod: 0, prelim: 0 },
         C: { mod: 0, prelim: 6 },

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import withDefaultProps from '../helpers/withDefaultProps';
 import { TreeNode } from '../helpers/TreeGraph';
 
@@ -15,11 +14,7 @@ export interface Props {
   showLabel?: boolean;
 }
 
-const Text = styled.text`
-  font-size: 2px;
-  fill: #fff;
-`;
-
+// TODO: Actually center the text properly
 const NodeComponent: React.SFC<Props> = ({
   cx,
   cy,
@@ -37,9 +32,14 @@ const NodeComponent: React.SFC<Props> = ({
       fill="rgb(15, 98, 189)"
     />
     {showLabel && (
-      <Text x={(cx || 0) - 0.4} y={(cy || 0) + 0.2}>
+      <text
+        fill="#fff"
+        style={{ fontSize: 2 }}
+        x={(cx || 0) - 0.4}
+        y={(cy || 0) + 0.2}
+      >
         {id}
-      </Text>
+      </text>
     )}
   </g>
 );

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Node, { NodeElement } from './Node';
-import styled from 'styled-components';
 
 import TreeGraph, { TreeNode, Position } from '../helpers/TreeGraph';
 import positionTree, { Options } from '../helpers/positionTree';
@@ -24,19 +23,6 @@ interface Props extends Options {
   children?: Array<NodeElement>;
   className?: string;
 }
-
-const TreeSvg = styled.svg`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-`;
-
-const Line = styled.line`
-  stroke: #000;
-  stroke-width: 1;
-`;
 
 /**
  * Tree component
@@ -136,11 +122,13 @@ class Network extends React.Component<Props> {
       const [x, y] = treeGraph.getCoordinates(node);
       const [childX, childY] = treeGraph.getCoordinates(childNode);
       connectionNodes.push(
-        <Line
+        <line
           x1={x}
           y1={y}
           x2={childX}
           y2={childY}
+          stroke="#000"
+          strokeWidth={1}
           key={`${node}-${childNode}`}
         />,
       );
@@ -193,7 +181,7 @@ class Network extends React.Component<Props> {
   }
 
   /**
-   * Map of each node to it's size
+   * Map of each node to its size
    */
   get nodeSizeMap(): Map<TreeNode, number> {
     const { vertices, nodeSize, children } = this.props;
@@ -204,6 +192,10 @@ class Network extends React.Component<Props> {
       });
       return sizeMap;
     }
+    if (!children)
+      throw new Error(
+        'Children must be passed in if no vertices prop is provided',
+      );
     const childArray = React.Children.toArray(children);
     return new Map(
       childArray.map<[TreeNode, number]>((child: NodeElement) => [
@@ -230,9 +222,9 @@ class Network extends React.Component<Props> {
   render() {
     const { width, height, className } = this.props;
     return (
-      <TreeSvg viewBox={`0 0 ${width} ${height}`} className={className}>
+      <svg viewBox={`0 0 ${width} ${height}`} className={className}>
         {this.renderTree()}
-      </TreeSvg>
+      </svg>
     );
   }
 }

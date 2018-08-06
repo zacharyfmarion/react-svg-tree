@@ -25,11 +25,11 @@ class TreeGraph {
   vertexMap: Map<TreeNode, Array<TreeNode>>;
   parentMap: Map<TreeNode, TreeNode>;
   positionMap: Map<TreeNode, Position>;
-  lsonMap: Map<TreeNode, TreeNode>;
-  rLinkMap: Map<TreeNode, TreeNode>;
   leftNeighborMap: Map<TreeNode, TreeNode | null>;
   prevNodeMap: Map<TreeNode, TreeNode | null>;
   nodeSizeMap: Map<TreeNode, number>;
+  xTopAdjustment: number;
+  yTopAdjustment: number;
 
   constructor(
     vertexMap: Map<TreeNode, Array<TreeNode>>,
@@ -41,8 +41,6 @@ class TreeGraph {
     // TODO: Can we defer this to the first traversal? Props not
     this.parentMap = this.createParentMap();
     this.positionMap = new Map([rootNodePosition]);
-    this.lsonMap = new Map();
-    this.rLinkMap = new Map();
     this.leftNeighborMap = new Map();
     this.prevNodeMap = new Map();
   }

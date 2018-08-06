@@ -39,10 +39,6 @@ export interface Options {
   subtreeSeparation: number;
 }
 
-// GLOBALS
-let xTopAdjustment: number;
-let yTopAdjustment: number;
-
 /**
  * Function that optimally positions the x coordinates of all nodes in
  * a tree for aesthetics. Adapted from http://www.cs.unc.edu/techreports/89-034.pdf
@@ -62,8 +58,8 @@ export default function positionTree(
     firstWalk(tree, node, 0, options);
     // Determine how to adjust all the nodes with respect to
     // the location of the root.
-    xTopAdjustment = tree.xCoord(node) - tree.prelim(node);
-    yTopAdjustment = tree.yCoord(node);
+    tree.xTopAdjustment = tree.xCoord(node) - tree.prelim(node);
+    tree.yTopAdjustment = tree.yCoord(node);
     return secondWalk(tree, node, 0, 0, options);
   }
   return true;
@@ -257,8 +253,8 @@ export function secondWalk(
 ): boolean {
   let result = true;
   if (level <= options.maxDepth) {
-    let xTemp = xTopAdjustment + tree.prelim(node) + modSum;
-    let yTemp = yTopAdjustment + level * options.levelSeparation;
+    let xTemp = tree.xTopAdjustment + tree.prelim(node) + modSum;
+    let yTemp = tree.yTopAdjustment + level * options.levelSeparation;
     // Check to see that xTemp and yTemp fit within the viewing rect
     if (checkExtendsRange(xTemp, yTemp, options)) {
       tree.updatePositionValue(node, { x: xTemp, y: yTemp });

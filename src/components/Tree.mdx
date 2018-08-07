@@ -1,6 +1,6 @@
 ---
 name: Tree
-path: /tree
+route: /tree
 ---
 
 import { Playground } from 'docz';
@@ -8,6 +8,10 @@ import Tree from './Tree.tsx';
 import Node from './Node.tsx';
 
 # Basic Tree
+
+```js
+import { Node } from 'react-svg-tree';
+```
 
 ## Using a vertex data structure
 
@@ -31,8 +35,8 @@ import Node from './Node.tsx';
       ['L', []],
     ]);
     return <Tree
-      width={120}
-      height={50}
+      width={200}
+      height={75}
       rootId="O"
       vertices={vertexMap}
       showLabels={true}
@@ -43,7 +47,7 @@ import Node from './Node.tsx';
 ## Using the Node components
 
 <Playground>
-  <Tree width={120} height={50} rootId={14} showLabels={true}>
+  <Tree width={200} height={75} rootId={14} showLabels={true}>
     {/* Depth === 0 */}
     <Node id={14} childNodes={[4, 13, 5]} />
     {/* Depth === 1 */}
@@ -72,10 +76,10 @@ import Node from './Node.tsx';
   {() => {
     const RectangleNode = props => (
       <Node {...props}>
-        <rect width={4} height={4} fill="#000" stroke="red" style={{ strokeWidth: 1 }} />
+        <rect width={10} height={10} fill="#000" stroke="teal" style={{ strokeWidth: 1 }} />
       </Node> 
     );
-    return <Tree width={120} height={50} rootId={14} showLabels={true}>
+    return <Tree width={200} height={75} rootId={14} showLabels={true}>
       {/* Depth === 0 */}
       <RectangleNode id={14} childNodes={[4, 13, 5]} />
       {/* Depth === 1 */}

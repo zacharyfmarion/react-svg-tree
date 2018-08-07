@@ -1,12 +1,16 @@
 ---
 name: Node
-path: /node
+route: /node
 ---
 
 import { Playground } from 'docz';
 import Node from './Node.tsx';
 
 # Node
+
+```js
+import { Node } from 'react-svg-tree';
+```
 
 ## Basic Node
 
@@ -17,6 +21,17 @@ A node is essentially an svg `circle`. All props supported by circle are support
     <Node id="A" x={10} y={10} r={10} fill="teal" />
   </svg>
 </Playground>
+
+## With Label
+
+A node is essentially an svg `circle`. All props supported by circle are supported by the node. Node that the x and y props are overriden by the formatting algorithm and should not be set in the render method.
+
+<Playground>
+  <svg viewBox='0 0 20 20' style={{height: 100}}>
+    <Node id="A" x={10} y={10} r={10} fill="teal" showLabel />
+  </svg>
+</Playground>
+
 
 ## Custom svg content
 

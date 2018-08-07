@@ -29,13 +29,13 @@ interface Props extends Options {
 class Network extends React.Component<Props> {
   static defaultProps = {
     width: 200,
-    height: 150,
+    height: 100,
     rootId: 0,
-    nodeSize: 2,
-    levelSeparation: 10,
+    nodeSize: 5,
+    levelSeparation: 20,
     maxDepth: Infinity,
-    siblingSeparation: 10,
-    subtreeSeparation: 10,
+    siblingSeparation: 15,
+    subtreeSeparation: 15,
   };
 
   /**

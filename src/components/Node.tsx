@@ -1,5 +1,4 @@
 import * as React from 'react';
-import withDefaultProps from '../helpers/withDefaultProps';
 import { TreeNode } from '../helpers/TreeGraph';
 
 export type NodeElement = React.ReactElement<Props>;
@@ -9,41 +8,55 @@ export interface Props {
   childNodes?: Array<TreeNode>;
   className?: string;
   r?: number;
-  cx?: number;
-  cy?: number;
+  x?: number;
+  y?: number;
   showLabel?: boolean;
+  children?: React.ReactNode;
 }
 
-// TODO: Actually center the text properly
 const NodeComponent: React.SFC<Props> = ({
-  cx,
-  cy,
+  x,
+  y,
   id,
-  r,
+  r = 2,
   showLabel,
   className,
-}: Props) => (
-  <g>
-    <circle
-      cx={cx}
-      cy={cy}
-      r={r}
-      className={className}
-      fill="rgb(15, 98, 189)"
-    />
-    {showLabel && (
-      <text
-        fill="#fff"
-        style={{ fontSize: 2 }}
-        x={(cx || 0) - 0.4}
-        y={(cy || 0) + 0.2}
-      >
-        {id}
-      </text>
-    )}
-  </g>
-);
+  children,
+  ...props
+}: Props) => {
+  const child: any = React.Children.toArray(children)[0];
+  return (
+    <g>
+      {!child && (
+        <circle
+          cx={x}
+          cy={y}
+          r={r}
+          className={className}
+          fill="rgb(15, 98, 189)"
+          {...props}
+        />
+      )}
+      {child &&
+        React.cloneElement(child, {
+          x: (x || 0) - child.props.width / 2,
+          y: (y || 0) - child.props.height / 2,
+          className,
+          ...props,
+        })}
+      {showLabel && (
+        <text
+          fill="#fff"
+          style={{ fontSize: 2 }}
+          textAnchor="middle"
+          x={x}
+          y={(y || 0) + ((child && child.props && child.props.height) || r) / 3}
+        >
+          {id}
+        </text>
+      )}
+    </g>
+  );
+};
 
-export default withDefaultProps({
-  r: 2,
-})(NodeComponent);
+export default NodeComponent;

@@ -3,7 +3,6 @@ import Node, { NodeElement } from './Node';
 
 import TreeGraph, { TreeNode, Position } from '../helpers/TreeGraph';
 import positionTree, { Options } from '../helpers/positionTree';
-import withDefaultProps from '../helpers/withDefaultProps';
 
 interface Props extends Options {
   /** The element that you wish to display at the root of the tree */
@@ -28,6 +27,17 @@ interface Props extends Options {
  * Tree component
  */
 class Network extends React.Component<Props> {
+  static defaultProps = {
+    width: 200,
+    height: 150,
+    rootId: 0,
+    nodeSize: 2,
+    levelSeparation: 10,
+    maxDepth: Infinity,
+    siblingSeparation: 10,
+    subtreeSeparation: 10,
+  };
+
   /**
    * Render the nodes into a normalized tree based on the id's
    * of the nodes that are their children. Here we create a TreeGraph
@@ -59,8 +69,8 @@ class Network extends React.Component<Props> {
       const createdNode = (
         <Node
           id={node}
-          cx={x}
-          cy={y}
+          x={x}
+          y={y}
           r={this.nodeSizeMap.get(node)}
           showLabel={showLabels}
           key={node || '0'}
@@ -88,8 +98,8 @@ class Network extends React.Component<Props> {
       // Determine the position of the node element in the SVG
       const [x, y] = treeGraph.getCoordinates(child.props.id);
       const clonedNode = React.cloneElement(child as any, {
-        cx: x,
-        cy: y,
+        x: x,
+        y: y,
         r: this.nodeSizeMap.get(child.props.id),
         showLabel: this.props.showLabels,
         key: child.props.id,
@@ -229,13 +239,4 @@ class Network extends React.Component<Props> {
   }
 }
 
-export default withDefaultProps({
-  width: 200,
-  height: 150,
-  rootId: 0,
-  nodeSize: 2,
-  levelSeparation: 10,
-  maxDepth: Infinity,
-  siblingSeparation: 10,
-  subtreeSeparation: 10,
-})(Network);
+export default Network;

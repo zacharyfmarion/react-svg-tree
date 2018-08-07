@@ -1,0 +1,31 @@
+---
+name: Node
+path: /node
+---
+
+import { Playground } from 'docz';
+import Node from './Node.tsx';
+
+# Node
+
+## Basic Node
+
+A node is essentially an svg `circle`. All props supported by circle are supported by the node. Node that the x and y props are overriden by the formatting algorithm and should not be set in the render method.
+
+<Playground>
+  <svg viewBox='0 0 20 20' style={{height: 100}}>
+    <Node id="A" x={10} y={10} r={10} fill="teal" />
+  </svg>
+</Playground>
+
+## Custom svg content
+
+You can pass in a custom svg into node and have that be rendered instead of the default circle.
+
+<Playground>
+  <svg viewBox='0 0 20 20' style={{height: 100}}>
+    <Node id="A" x={10} y={10}>
+      <rect width={20} height={20} stroke="red" />
+    </Node>
+  </svg>
+</Playground>

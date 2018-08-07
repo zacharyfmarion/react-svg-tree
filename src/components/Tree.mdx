@@ -3,25 +3,98 @@ name: Tree
 path: /tree
 ---
 
+import { Playground } from 'docz';
 import Tree from './Tree.tsx';
 import Node from './Node.tsx';
 
 # Basic Tree
 
+## Using a vertex data structure
+
 <Playground>
-  <Tree width={100} height={100}>
+  {() => {
+    const vertexMap = new Map([
+      ['O', ['E', 'F', 'N']],
+      ['E', ['A', 'D']],
+      ['F', []],
+      ['N', ['G', 'M']],
+      ['A', []],
+      ['D', ['B', 'C']],
+      ['G', []],
+      ['M', ['H', 'I', 'J', 'K', 'L']],
+      ['B', []],
+      ['C', []],
+      ['H', []],
+      ['I', []],
+      ['J', []],
+      ['K', []],
+      ['L', []],
+    ]);
+    return <Tree
+      width={120}
+      height={50}
+      rootId="O"
+      vertices={vertexMap}
+      showLabels={true}
+    />
+  }}
+</Playground>
+
+## Using the Node components
+
+<Playground>
+  <Tree width={120} height={50} rootId={14} showLabels={true}>
     {/* Depth === 0 */}
-    <Node id={0} depth={0} rowIndex={0} childNodes={[1, 2, 3]} />
+    <Node id={14} childNodes={[4, 13, 5]} />
     {/* Depth === 1 */}
-    <Node id={1} depth={1} rowIndex={0} childNodes={[4, 5, 6]} />
-    <Node id={2} depth={1} rowIndex={1} childNodes={[7, 8]} />
-    <Node id={3} depth={1} rowIndex={2} childNodes={[9]} />
+    <Node id={4} childNodes={[0, 3]} />
+    <Node id={13} childNodes={[]} />
+    <Node id={5} childNodes={[6, 12]} />
     {/* Depth === 2 */}
-    <Node id={4} depth={2} rowIndex={0} />
-    <Node id={5} depth={2} rowIndex={1} />
-    <Node id={6} depth={2} rowIndex={2} />
-    <Node id={7} depth={2} rowIndex={3} />
-    <Node id={8} depth={2} rowIndex={4} />
-    <Node id={9} depth={2} rowIndex={5} />
+    <Node id={0} childNodes={[]} />
+    <Node id={3} childNodes={[1, 2]} />
+    <Node id={6} childNodes={[]} />
+    <Node id={12} childNodes={[7, 8, 9, 10, 11]} />
+    {/* Depth === 3 */}
+    <Node id={1} />
+    <Node id={2} />
+    <Node id={7} />
+    <Node id={8} />
+    <Node id={9} />
+    <Node id={10} />
+    <Node id={11} />
   </Tree>
+</Playground>
+
+## With a custom node component
+
+<Playground>
+  {() => {
+    const RectangleNode = props => (
+      <Node {...props}>
+        <rect width={4} height={4} fill="#000" stroke="red" style={{ strokeWidth: 1 }} />
+      </Node> 
+    );
+    return <Tree width={120} height={50} rootId={14} showLabels={true}>
+      {/* Depth === 0 */}
+      <RectangleNode id={14} childNodes={[4, 13, 5]} />
+      {/* Depth === 1 */}
+      <RectangleNode id={4} childNodes={[0, 3]} />
+      <RectangleNode id={13} childNodes={[]} />
+      <RectangleNode id={5} childNodes={[6, 12]} />
+      {/* Depth === 2 */}
+      <RectangleNode id={0} childNodes={[]} />
+      <RectangleNode id={3} childNodes={[1, 2]} />
+      <RectangleNode id={6} childNodes={[]} />
+      <RectangleNode id={12} childNodes={[7, 8, 9, 10, 11]} />
+      {/* Depth === 3 */}
+      <RectangleNode id={1} />
+      <RectangleNode id={2} />
+      <RectangleNode id={7} />
+      <RectangleNode id={8} />
+      <RectangleNode id={9} />
+      <RectangleNode id={10} />
+      <RectangleNode id={11} />
+    </Tree>
+  }}
 </Playground>

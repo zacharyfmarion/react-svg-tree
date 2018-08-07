@@ -5,24 +5,6 @@ React Tree provides components for rendering tree graphs with svg. It uses the a
 ```js
 import { Tree, Node } from 'react-svg-tree';
 
-const vertexMap = new Map([
-  ['O', ['E', 'F', 'N']],
-  ['E', ['A', 'D']],
-  ['F', []],
-  ['N', ['G', 'M']],
-  ['A', []],
-  ['D', ['B', 'C']],
-  ['G', []],
-  ['M', ['H', 'I', 'J', 'K', 'L']],
-  ['B', []],
-  ['C', []],
-  ['H', []],
-  ['I', []],
-  ['J', []],
-  ['K', []],
-  ['L', []],
-]);
-
 const App = () => (
   <Tree
     width={200}

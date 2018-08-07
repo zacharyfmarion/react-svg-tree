@@ -60,6 +60,7 @@
     "@types/react-dom": "^16.0.7",
     "docz": "^0.9.6",
     "docz-theme-default": "^0.9.6",
+    "now": "^11.3.8",
     "typescript": "^3.0.1"
   },
   "jest": {

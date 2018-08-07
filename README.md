@@ -45,9 +45,3 @@ const App = () => (
   </Tree>
 );
 ```
-
-## TODO
-
-- [ ] Remove styled-components as a dependency
-- [ ] Center the text on the node component
-- [ ] Get docz working and hosted

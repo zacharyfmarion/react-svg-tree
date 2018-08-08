@@ -1,6 +1,6 @@
 # .npmignore 
 src
-examples
+assets
 config
 .vscode
 .docz

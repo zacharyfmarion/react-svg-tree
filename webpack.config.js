@@ -37,11 +37,6 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
-    library: {
-      root: 'ReactSvgTree',
-      amd: 'react-svg-tree',
-      commonjs: 'react-svg-tree',
-    },
     libraryTarget: 'umd',
     publicPath: '/dist/',
     umdNamedDefine: true,

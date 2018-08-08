@@ -19,7 +19,10 @@ export interface Props extends Options {
    * will be used for each node
    */
   nodeSize?: number;
-  /** Function that is called when there is an error */
+  /**
+   * Function that is called when there is an error. Returns an error
+   * message that explains what went wrong
+   */
   onError?: (message: string) => void;
   children?: Array<NodeElement>;
   className?: string;

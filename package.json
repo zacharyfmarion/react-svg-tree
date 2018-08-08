@@ -2,12 +2,13 @@
   "name": "react-svg-tree",
   "author": "Zachary Marion <zacharyfmarion@gmail.com> (http://zacharyfmarion.io)",
   "version": "0.0.0",
+  "license": "MIT",
   "description": "React component to render an SVG tree graph",
   "main": "dist/index.js",
   "scripts": {
     "docz": "docz dev",
     "docz:build": "docz build",
-    "build": "webpack",
+    "build": "rm -rf ./dist && webpack",
     "test": "jest --env=jsdom"
   },
   "dependencies": {

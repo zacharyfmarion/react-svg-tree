@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { TreeNode } from '../helpers/TreeGraph';
 
+export const DEFAULT_NODE_SIZE = 5;
+
 export type NodeElement = React.ReactElement<Props>;
 
 export interface Props {
@@ -16,7 +18,7 @@ export interface Props {
 
 class NodeComponent extends React.Component<Props> {
   static defaultProps = {
-    r: 5,
+    r: DEFAULT_NODE_SIZE,
   };
 
   render() {

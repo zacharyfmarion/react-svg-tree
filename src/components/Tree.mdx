@@ -70,6 +70,34 @@ import { Node } from 'react-svg-tree';
   </Tree>
 </Playground>
 
+## Varying node sizes
+
+<Playground>
+  {() => {
+    return <Tree width={220} height={100} rootId={14} showLabels={true}>
+      {/* Depth === 0 */}
+      <Node r={5} id={14} childNodes={[4, 13, 5]} />
+      {/* Depth === 1 */}
+      <Node r={10} id={4} childNodes={[0, 3]} />
+      <Node r={7} id={13} childNodes={[]} />
+      <Node r={4} id={5} childNodes={[6, 12]} />
+      {/* Depth === 2 */}
+      <Node r={8} id={0} childNodes={[]} />
+      <Node r={7} id={3} childNodes={[1, 2]} />
+      <Node r={8} id={6} childNodes={[]} />
+      <Node r={9} id={12} childNodes={[7, 8, 9, 10, 11]} />
+      {/* Depth === 3 */}
+      <Node r={12} id={1} />
+      <Node r={6} id={2} />
+      <Node r={8} id={7} />
+      <Node r={5} id={8} />
+      <Node r={9} id={9} />
+      <Node r={7} id={10} />
+      <Node r={10} id={11} />
+    </Tree>
+  }}
+</Playground>
+
 ## With a custom node component
 
 <Playground>

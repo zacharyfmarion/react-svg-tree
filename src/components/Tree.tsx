@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Node, { NodeElement } from './Node';
+import Node, { NodeElement, DEFAULT_NODE_SIZE } from './Node';
 
 import TreeGraph, { TreeNode, Position } from '../helpers/TreeGraph';
 import positionTree, { Options } from '../helpers/positionTree';
 
-interface Props extends Options {
+export interface Props extends Options {
   /** The element that you wish to display at the root of the tree */
   rootId?: TreeNode;
   /** Whther or not to show the labels on each node */
@@ -31,7 +31,7 @@ class Network extends React.Component<Props> {
     width: 200,
     height: 100,
     rootId: 0,
-    nodeSize: 5,
+    nodeSize: DEFAULT_NODE_SIZE,
     levelSeparation: 20,
     maxDepth: Infinity,
     siblingSeparation: 15,
@@ -210,7 +210,7 @@ class Network extends React.Component<Props> {
     return new Map(
       childArray.map<[TreeNode, number]>((child: NodeElement) => [
         child.props.id,
-        child.props.r || 2,
+        child.props.r || DEFAULT_NODE_SIZE,
       ]),
     );
   }

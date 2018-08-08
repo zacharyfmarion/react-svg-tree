@@ -28,11 +28,11 @@ const App = () => (
     {/* Depth === 1 */}
     <Node id={4} childNodes={[0, 3]} />
     <Node id={5} childNodes={[6, 12]} />
-    <Node id={13} childNodes={[]} />
+    <Node id={13} />
     {/* Depth === 2 */}
-    <Node id={0} childNodes={[]} />
+    <Node id={0} />
     <Node id={3} childNodes={[1, 2]} />
-    <Node id={6} childNodes={[]} />
+    <Node id={6} />
     <Node id={12} childNodes={[7, 8, 9, 10, 11]} />
     {/* Depth === 3 */}
     <Node id={1} />

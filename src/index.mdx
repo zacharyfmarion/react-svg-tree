@@ -11,4 +11,30 @@ import TreeDemo from './TreeDemo.tsx';
 
 <TreeDemo />
 
-`react-svg-tree` is a package that renders an svg tree from a data structure of nodes. It can also optionally render the tree from children that are provided at render. The package exposes two components, `Tree` and `Node`, which are documented on their respective pages. Feel free to click on the nodes in the demo above to see its functionality.
+The `react-svg-tree` renders an svg tree from a data structure of nodes. It can also optionally render the tree from children that are provided at render. The package exposes two components, `Tree` and `Node`, which are documented on their respective pages. Feel free to click on the nodes in the demo above to see its functionality.
+
+## Basic Usage
+
+```js
+import { Tree } from 'react-svg-tree';
+
+const vertexMap = new Map([
+  [0, [1, 2, 3]],
+  [1, [4, 5]],
+  [2, []],
+  [3, [6]],
+  [4, []],
+  [5, []],
+  [6, []],
+]);
+
+const App = () => (
+  <Tree
+    width={200}
+    height={150}
+    rootId={0}
+    vertices={vertexMap}
+    showLabels={true}
+  />
+);
+```

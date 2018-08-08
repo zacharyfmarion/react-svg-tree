@@ -19,6 +19,11 @@ export interface Props extends Options {
    * will be used for each node
    */
   nodeSize?: number;
+  /**
+   * Function that is called when there is an error. Returns an error
+   * message that explains what went wrong
+   */
+  onError?: (message: string) => void;
   children?: Array<NodeElement>;
   className?: string;
 }
@@ -127,7 +132,7 @@ class Network extends React.Component<Props> {
     childNodes: Array<TreeNode>,
   ): Array<React.ReactNode> => {
     const connectionNodes: Array<React.ReactNode> = [];
-    if (!node) return [];
+    if (node === undefined) return [];
     childNodes.forEach((childNode: TreeNode) => {
       const [x, y] = treeGraph.getCoordinates(node);
       const [childX, childY] = treeGraph.getCoordinates(childNode);
@@ -169,6 +174,8 @@ class Network extends React.Component<Props> {
       siblingSeparation: this.props.siblingSeparation,
       subtreeSeparation: this.props.subtreeSeparation,
     });
+    if (!res && this.props.onError)
+      this.props.onError('Tree could not be rendered in the viewing rect');
     return res ? treeGraph : null;
   };
 
@@ -177,12 +184,10 @@ class Network extends React.Component<Props> {
    * Otherwise we just use the `vertices` prop
    */
   get vertexMap(): Map<TreeNode, Array<TreeNode>> {
-    const { vertices, children } = this.props;
+    const { vertices, children, onError } = this.props;
     if (vertices) return vertices;
-    if (!children)
-      throw new Error(
-        'Children must be passed in if no vertices prop is provided',
-      );
+    if (!children && onError)
+      onError('Children must be passed in if no vertices prop is provided');
     return new Map(
       React.Children.toArray(children).map<[TreeNode, Array<TreeNode>]>(
         (child: NodeElement) => [child.props.id, child.props.childNodes || []],
@@ -194,7 +199,7 @@ class Network extends React.Component<Props> {
    * Map of each node to its size
    */
   get nodeSizeMap(): Map<TreeNode, number> {
-    const { vertices, nodeSize, children } = this.props;
+    const { vertices, onError, nodeSize, children } = this.props;
     if (vertices) {
       const sizeMap = new Map();
       vertices.forEach((_, node) => {
@@ -202,10 +207,8 @@ class Network extends React.Component<Props> {
       });
       return sizeMap;
     }
-    if (!children)
-      throw new Error(
-        'Children must be passed in if no vertices prop is provided',
-      );
+    if (!children && onError)
+      onError('Children must be passed in if no vertices prop is provided');
     const childArray = React.Children.toArray(children);
     return new Map(
       childArray.map<[TreeNode, number]>((child: NodeElement) => [

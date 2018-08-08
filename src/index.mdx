@@ -5,19 +5,10 @@ order: 1
 ---
 
 import { Tree, Node } from './components';
+import TreeDemo from './TreeDemo.tsx';
 
 # react-svg-tree
 
-<Tree width={200} height={75} rootId="A" showLabels={true}>
-  <Node id="A" childNodes={['B', 'C', 'D']} />
-  <Node id="B" childNodes={['E', 'F']} />
-  <Node id="C" childNodes={['G', 'H']} />
-  <Node id="D" childNodes={['I']} />
-  <Node id="E"/>
-  <Node id="F"/>
-  <Node id="G"/>
-  <Node id="H"/>
-  <Node id="I"/>
-</Tree>
+<TreeDemo />
 
-`react-svg-tree` is a package that renders an svg tree from a data structure of nodes. It can also optionally render the tree from children that are provided at render. The package exposes two components, `Tree` and `Node`, which are documented on their respective pages.
+`react-svg-tree` is a package that renders an svg tree from a data structure of nodes. It can also optionally render the tree from children that are provided at render. The package exposes two components, `Tree` and `Node`, which are documented on their respective pages. Feel free to click on the nodes in the demo above to see its functionality.

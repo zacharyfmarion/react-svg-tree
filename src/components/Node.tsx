@@ -9,11 +9,13 @@ export interface Props {
   id: TreeNode;
   childNodes?: Array<TreeNode>;
   className?: string;
+  style?: Object;
   r?: number;
   x?: number;
   y?: number;
   showLabel?: boolean;
   children?: React.ReactNode;
+  onClick?: (event: React.MouseEvent<SVGCircleElement>) => void;
 }
 
 class NodeComponent extends React.Component<Props> {
@@ -28,14 +30,16 @@ class NodeComponent extends React.Component<Props> {
       id,
       r,
       showLabel,
+      onClick,
       className,
+      style,
       children,
       ...props
     } = this.props;
 
     const child: any = React.Children.toArray(children)[0];
     return (
-      <g>
+      <g style={style}>
         {!child && (
           <circle
             cx={x}
@@ -43,6 +47,7 @@ class NodeComponent extends React.Component<Props> {
             r={r}
             className={className}
             fill="rgb(15, 98, 189)"
+            onClick={onClick}
             {...props}
           />
         )}

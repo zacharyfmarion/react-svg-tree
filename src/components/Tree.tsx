@@ -127,7 +127,7 @@ class Network extends React.Component<Props> {
     childNodes: Array<TreeNode>,
   ): Array<React.ReactNode> => {
     const connectionNodes: Array<React.ReactNode> = [];
-    if (!node) return [];
+    if (node === undefined) return [];
     childNodes.forEach((childNode: TreeNode) => {
       const [x, y] = treeGraph.getCoordinates(node);
       const [childX, childY] = treeGraph.getCoordinates(childNode);

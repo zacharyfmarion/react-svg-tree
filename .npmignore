@@ -9,3 +9,6 @@ config
 webpack.config.js
 doczrc.js
 index.d.ts
+tslint.json
+tsconfig.json
+tsconfig.test.json

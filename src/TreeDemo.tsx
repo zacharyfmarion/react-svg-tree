@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Tree, Node } from './components';
 
-const ErrorSvg = ({ style }) => (
+const ErrorSvg = ({ style }: { style: React.CSSProperties }) => (
   <svg viewBox="0 0 512 512" style={style}>
     <circle style={{ fill: '#ECF0F1' }} cx="256" cy="256" r="245.551" />
     <polygon
@@ -98,7 +98,7 @@ class TreeDemo extends React.Component {
   };
 
   renderNodes = () => {
-    let nodes = [];
+    let nodes: Array<any> = [];
     this.state.vertexMap.forEach((children, key) => {
       nodes.push(
         <Node

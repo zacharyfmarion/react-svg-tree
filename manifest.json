@@ -1,8 +1,8 @@
 {
-  "vendors.js": "/static/js/vendors.c5f523c8.js",
-  "app.js": "/static/js/app.e7579a94553e97a1798c.js",
-  "src-index.js": "/static/js/src-index.4bfaf4ee.js",
-  "src-components-node.js": "/static/js/src-components-node.21eb2681.js",
-  "src-components-tree.js": "/static/js/src-components-tree.bba410e4.js",
-  "index.html": "/index.html"
+  "vendors.js": "/react-svg-tree/static/js/vendors.d1690be6.js",
+  "app.js": "/react-svg-tree/static/js/app.cbc208b384b27bff679e.js",
+  "src-index.js": "/react-svg-tree/static/js/src-index.4bfaf4ee.js",
+  "src-components-node.js": "/react-svg-tree/static/js/src-components-node.21eb2681.js",
+  "src-components-tree.js": "/react-svg-tree/static/js/src-components-tree.bba410e4.js",
+  "index.html": "/react-svg-tree/index.html"
 }

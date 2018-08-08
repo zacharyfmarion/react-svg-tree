@@ -1,0 +1,11 @@
+# .npmignore 
+src
+examples
+config
+.vscode
+.docz
+.babelrc
+.gitignore
+webpack.config.js
+doczrc.js
+index.d.ts

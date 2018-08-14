@@ -1,8 +1,9 @@
 {
-  "vendors.js": "/react-svg-tree/static/js/vendors.9213a601.js",
-  "app.js": "/react-svg-tree/static/js/app.ecf64cf652469f97ab6a.js",
+  "vendors.js": "/react-svg-tree/static/js/vendors.a94ba303.js",
+  "app.js": "/react-svg-tree/static/js/app.3e89068b.js",
   "src-index.js": "/react-svg-tree/static/js/src-index.cb35e9ba.js",
-  "src-components-node.js": "/react-svg-tree/static/js/src-components-node.bf1507db.js",
-  "src-components-tree.js": "/react-svg-tree/static/js/src-components-tree.ed0bce86.js",
+  "src-components-node.js": "/react-svg-tree/static/js/src-components-node.9bd2a2af.js",
+  "src-components-tree.js": "/react-svg-tree/static/js/src-components-tree.d4ef8f79.js",
+  "runtime~app.js": "/react-svg-tree/static/js/runtime~app.8268b4b5ab4cbf2410e8.js",
   "index.html": "/react-svg-tree/index.html"
 }

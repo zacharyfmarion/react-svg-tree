@@ -68,8 +68,16 @@ interface State {
 // Component to create a tree, used in docz as a demo of the component
 class TreeDemo extends React.Component {
   state: State = {
-    vertexMap: new Map([[0, []]]),
-    maxNodeId: 0,
+    vertexMap: new Map([
+      [0, [1, 2, 3]],
+      [1, [4, 5]],
+      [2, []],
+      [3, [6]],
+      [4, []],
+      [5, []],
+      [6, []],
+    ]),
+    maxNodeId: 6,
     error: null,
   };
 
@@ -79,8 +87,16 @@ class TreeDemo extends React.Component {
 
   resetState = () => {
     this.setState({
-      vertexMap: new Map([[0, []]]),
-      maxNodeId: 0,
+      vertexMap: new Map([
+        [0, [1, 2, 3]],
+        [1, [4, 5]],
+        [2, []],
+        [3, [6]],
+        [4, []],
+        [5, []],
+        [6, []],
+      ]),
+      maxNodeId: 6,
       error: null,
     });
   };

@@ -3,6 +3,11 @@ const path = require('path');
 module.exports = {
   entry: './src/index.ts',
   mode: 'production',
+  devServer: {
+    contentBase: path.join(__dirname, 'build'),
+    compress: true,
+    port: 3000,
+  },
   module: {
     rules: [
       {

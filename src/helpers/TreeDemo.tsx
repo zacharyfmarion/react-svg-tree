@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tree, Node } from './components';
+import Tree from '../Tree';
 
 const ErrorSvg = ({ style }: { style: React.CSSProperties }) => (
   <svg viewBox="0 0 512 512" style={style}>
@@ -59,19 +59,17 @@ const ErrorSvg = ({ style }: { style: React.CSSProperties }) => (
   </svg>
 );
 
+interface State {
+  vertexMap: Map<any, Array<any>>;
+  maxNodeId: number;
+  error: string | null;
+}
+
 // Component to create a tree, used in docz as a demo of the component
 class TreeDemo extends React.Component {
-  state = {
-    vertexMap: new Map([
-      [0, [1, 2, 3]],
-      [1, [4, 5]],
-      [2, []],
-      [3, [6]],
-      [4, []],
-      [5, []],
-      [6, []],
-    ]),
-    maxNodeId: 6,
+  state: State = {
+    vertexMap: new Map([[0, []]]),
+    maxNodeId: 0,
     error: null,
   };
 
@@ -97,21 +95,20 @@ class TreeDemo extends React.Component {
     this.setState({ vertexMap, maxNodeId });
   };
 
-  renderNodes = () => {
-    let nodes: Array<any> = [];
-    this.state.vertexMap.forEach((children, key) => {
-      nodes.push(
-        <Node
-          id={key}
-          labelText="+"
-          childNodes={children}
-          onClick={() => this.addNode(key)}
-          style={{ cursor: 'pointer' }}
-        />,
-      );
-    });
-    return nodes;
-  };
+  renderNode = ({ x, y, id }: { x: number; y: number; id: any }) => (
+    <g onClick={() => this.addNode(id)} style={{ cursor: 'pointer' }}>
+      <circle cx={x} cy={y} r={5} fill="rgb(15, 98, 189)" />
+      <text
+        x={x}
+        y={(y || 0) + 1.5}
+        style={{ fontSize: 5 }}
+        textAnchor="middle"
+        fill="#fff"
+      >
+        {id}
+      </text>
+    </g>
+  );
 
   render() {
     return (
@@ -132,14 +129,15 @@ class TreeDemo extends React.Component {
           <Tree
             width={200}
             height={100}
-            showLabels={true}
+            nodeSize={5}
             levelSeparation={20}
             siblingSeparation={15}
             subtreeSeparation={15}
             maxDepth={Infinity}
+            vertices={this.state.vertexMap}
             onError={this.handleError}
           >
-            {this.renderNodes()}
+            {this.renderNode}
           </Tree>
         ) : (
           this.state.error && (

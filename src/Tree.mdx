@@ -1,0 +1,68 @@
+---
+name: Tree
+route: /tree
+---
+
+import { Playground, PropsTable } from 'docz';
+import Tree from './Tree.tsx';
+import TextLabel from './helpers/TextLabel.tsx';
+import TreeAnimation from './helpers/TreeAnimation.tsx';
+
+# Tree 
+
+```js
+import { Tree } from 'react-svg-tree';
+```
+
+## Props
+
+<PropsTable of={Tree} />
+
+## Basic Example
+
+The Tree component takes a function-as-child which allows you to render the node itself.
+
+<Playground>
+  {() => {
+    const vertexMap = new Map([
+      ['O', ['E', 'F', 'N']],
+      ['E', ['A', 'D']],
+      ['F', []],
+      ['N', ['G', 'M']],
+      ['A', []],
+      ['D', ['B', 'C']],
+      ['G', []],
+      ['M', ['H', 'I', 'J', 'K', 'L']],
+      ['B', []],
+      ['C', []],
+      ['H', []],
+      ['I', []],
+      ['J', []],
+      ['K', []],
+      ['L', []],
+    ]);
+    return <Tree
+      width={200}
+      height={75}
+      rootId="O"
+      nodeSize={5}
+      vertices={vertexMap}
+    >
+      {({x, y, id}) => (
+        <g>
+          <circle
+            cx={x}
+            cy={y}
+            r={5}
+            fill="rgb(15, 98, 189)"
+          />
+          <TextLabel x={x} y={y} id={id} />
+        </g>
+      )}
+    </Tree>
+  }}
+</Playground>
+
+## Animation example
+
+<TreeAnimation />

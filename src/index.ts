@@ -1,1 +1,2 @@
-export { Tree, Node } from './components';
+import Tree from './Tree';
+export default Tree;

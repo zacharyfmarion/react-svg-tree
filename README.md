@@ -2,7 +2,7 @@
 
 ![React svg tree](https://raw.githubusercontent.com/zacharyfmarion/react-svg-tree/master/assets/tree.png)
 
-React Tree provides components for rendering tree graphs with svg. It uses the algorithm described in [this paper](http://www.cs.unc.edu/techreports/89-034.pdf). You can pass in a map of the vertices to render the tree:
+React Tree provides components for rendering tree graphs with svg. It uses the algorithm described in [this paper](http://www.cs.unc.edu/techreports/89-034.pdf). You can pass in a map of the vertices to render the tree. The component takes a function-as-child which passes in the coordinates and id of the child node, so you can render whatever svg you want.
 
 ```js
 import { Tree } from 'react-svg-tree';
@@ -18,42 +18,8 @@ const vertexMap = new Map([
 ]);
 
 const App = () => (
-  <Tree
-    width={200}
-    height={150}
-    rootId={0}
-    vertices={vertexMap}
-    showLabels={true}
-  />
-);
-```
-
-You can also pass in a Node components as children, which allows you to modify the size of the nodes:
-
-```js
-import { Tree, Node } from 'react-svg-tree';
-
-const App = () => (
-  <Tree width={200} height={150} rootId={14} showLabels={true}>
-    {/* Depth === 0 */}
-    <Node id={14} childNodes={[4, 5, 13]} />
-    {/* Depth === 1 */}
-    <Node id={4} childNodes={[0, 3]} />
-    <Node id={5} childNodes={[6, 12]} />
-    <Node id={13} />
-    {/* Depth === 2 */}
-    <Node id={0} />
-    <Node id={3} childNodes={[1, 2]} />
-    <Node id={6} />
-    <Node id={12} childNodes={[7, 8, 9, 10, 11]} />
-    {/* Depth === 3 */}
-    <Node id={1} />
-    <Node id={2} />
-    <Node id={7} />
-    <Node id={8} />
-    <Node id={9} />
-    <Node id={10} />
-    <Node id={11} />
+  <Tree width={200} height={75} rootId="O" nodeSize={5} vertices={vertexMap}>
+    {({ x, y, id }) => <circle cx={x} cy={y} r={5} />}
   </Tree>
 );
 ```

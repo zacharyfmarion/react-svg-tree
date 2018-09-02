@@ -121,7 +121,7 @@ class TreeDemo extends React.Component {
         textAnchor="middle"
         fill="#fff"
       >
-        {id}
+        +
       </text>
     </g>
   );

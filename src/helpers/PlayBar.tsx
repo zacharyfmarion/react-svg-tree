@@ -61,6 +61,7 @@ class PlayBar extends React.Component<Props> {
 
   resetState = () => {
     const { states, initialIndex } = this.props;
+    clearInterval(this.interval);
     this.setState({
       index: 0,
       state: states[initialIndex || 0],
